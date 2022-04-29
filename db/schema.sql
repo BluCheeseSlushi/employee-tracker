@@ -1,4 +1,4 @@
--- USE DATABASE employeetracker
+USE employeetracker;
 
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS role;
