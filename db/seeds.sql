@@ -9,7 +9,7 @@ VALUES
 ('accountant', 62000, 1),
 ('developer', 77000, 2),
 ('team leader', 125000, 2),
-('head of accounting', 108000, 2),
+('head of accounting', 108000, 1),
 ('product owner', 148000, 3);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
