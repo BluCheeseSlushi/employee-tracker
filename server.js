@@ -1,9 +1,12 @@
+// Import
 const { response } = require('express');
 const express = require('express');
 const db = require('./db/connection');
 const inquirer = require('inquirer');
 const Choices = require('inquirer/lib/objects/choices');
+const cTable = require('console.table');
 
+// Init port num and app
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -21,6 +24,7 @@ db.connect(err => {
     });
 });
 
+// This function servers as the main menu
 const startApp = function() {
   console.log('Welcome to employee tracker!');
   return inquirer.prompt({
@@ -29,7 +33,7 @@ const startApp = function() {
       message: 'What would you like to do?',
       choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'Exit'],
   }).then((answer) => {
-      console.log(answer);
+      // The next function is called based on the menu option selected
       if (answer.menu == 'view all departments') {
           console.log('view all departments')
           viewDeparments();
@@ -61,6 +65,7 @@ const startApp = function() {
   })
 };
 
+// Displays all departments
 const viewDeparments = function() {
     const sql = `SELECT * FROM department`;
       db.query(sql, (err, rows) => {
@@ -73,6 +78,7 @@ const viewDeparments = function() {
     });
 };
 
+// Displays all roles
 const viewRoles = function() {
   const sql = `SELECT * FROM role
               LEFT JOIN department ON role.department_id = department.id`;
@@ -87,6 +93,7 @@ const viewRoles = function() {
   });
 }
 
+// Displays all employees
 const viewEmployees = function() {
   const sql = `SELECT * FROM employee
               LEFT JOIN role ON employee.role_id = role.id
@@ -102,6 +109,7 @@ const viewEmployees = function() {
   });
 }
 
+// adds a new department to the database
 const addDepartment = function() {
   return inquirer.prompt({
     type: 'input',
@@ -132,6 +140,7 @@ const addDepartment = function() {
 })
 };
 
+// adds a new role to the database
 const addRole = function() {
   return inquirer.prompt([{
     type: 'input',
@@ -187,6 +196,7 @@ const addRole = function() {
 })
 }
 
+// adds a new employee to the database
 const addEmployee = function() {
   return inquirer.prompt([{
     type: 'input',
@@ -248,6 +258,7 @@ const addEmployee = function() {
 })
 }
 
+// Changes the role of the selected employee
 const updateEmployee = function() {
   return inquirer.prompt([
     {
